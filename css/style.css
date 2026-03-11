@@ -1,0 +1,254 @@
+        :root {
+            --sky-blue: #a2d2ff;
+            --pale-pink: #ffafbd;
+            --glass: rgba(255, 255, 255, 0.25);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --neon-blue: #00d2ff;
+            --neon-pink: #ff9a9e;
+            --nav-en: #ccf3ff; /* 加深后的导航英文颜色 */
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+        body {
+            font-family: 'Montserrat', 'Noto Sans SC', sans-serif;
+            background: #f0f4f8;
+            overflow-x: hidden;
+            color: #333;
+        }
+
+        /* --- 背景粒子与视差层 --- */
+        .background-container {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, #e0f2fe 0%, #ffe4e6 100%);
+            z-index: -2;
+        }
+        .bubbles {
+            position: fixed; inset: 0; z-index: -1; pointer-events: none;
+        }
+        .bubble {
+            position: absolute; background: white; border-radius: 50%; opacity: 0.4;
+            animation: float-up 15s infinite ease-in-out;
+        }
+        @keyframes float-up {
+            0% { transform: translateY(110vh) scale(0); opacity: 0; }
+            50% { opacity: 0.6; }
+            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+        }
+
+        /* --- 导航栏 --- */
+        nav {
+            position: fixed; top: 0; width: 100%; height: 85px;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 5%; backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+            border-bottom: 1px solid var(--glass-border); z-index: 1000;
+        }
+        .logo {
+            font-family: 'Dancing Script', cursive; font-size: 2.2rem;
+            background: linear-gradient(to right, #74ebd5, #ACB6E5);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .nav-links { display: flex; list-style: none; gap: 25px; }
+        .nav-links a {
+            text-decoration: none; color: #444; font-size: 0.95rem; font-weight: 600;
+            text-align: center; transition: 0.3s;
+        }
+        .nav-links a span { 
+           display: block; 
+           font-size: 0.7rem; 
+           color: #ffffff;          /* 文字改为纯白 */
+           text-transform: uppercase; 
+           letter-spacing: 1.2px;
+           margin-top: 2px;
+    /* 核心修改：灰色阴影描边效果 */
+           text-shadow: 
+            -0.5px -0.5px 0 #323131,  
+             0.5px -0.5px 0 #323131,
+            -0.5px  0.5px 0 #323131,
+             0.5px  0.5px 0 #323131,
+             0px 2px 4px rgba(0,0,0,0.2);
+        }
+        .nav-links a:hover { color: var(--neon-pink); transform: translateY(-3px); }
+
+        /* --- 首页 Hero (严格复刻 Digital Garden 文字) --- */
+        .hero {
+            height: 100vh; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; text-align: center;
+            background: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+            background-attachment: fixed;
+        }
+        .hero-glass {
+            background: var(--glass); backdrop-filter: blur(20px);
+            padding: 60px 80px; border-radius: 40px; border: 1px solid var(--glass-border);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+        }
+        .hero h1 {
+            font-family: 'Dancing Script', cursive; font-size: 5.5rem;
+            color: white; text-shadow: 0 10px 20px rgba(0,0,0,0.1); margin-bottom: 10px;
+        }
+        .hero p { font-size: 1.2rem; color: white; letter-spacing: 5px; margin-bottom: 35px; }
+        
+        .btn-fancy {
+            padding: 16px 45px; background: white; color: #ff9a9e;
+            text-decoration: none; border-radius: 50px; font-weight: 700;
+            letter-spacing: 1px; box-shadow: 0 10px 20px rgba(255,154,158,0.3);
+            transition: 0.4s; display: inline-block;
+        }
+        .btn-fancy:hover { transform: scale(1.1); background: var(--sky-blue); color: white; }
+
+        /* --- 内容区域 --- */
+        .container { padding: 120px 10% 60px; }
+        .section-title { text-align: center; margin-bottom: 70px; }
+        .section-title h2 {
+            font-family: 'Dancing Script', cursive; font-size: 4.5rem;
+            color: var(--sky-blue); text-shadow: 2px 2px 0px rgba(255,255,255,0.8);
+        }
+        .section-title p { font-size: 1.1rem; color: #888; margin-top: -10px; }
+
+        .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
+
+        /* 3D 玻璃拟态卡片 */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(15px);
+            border-radius: 30px; padding: 40px; border: 1px solid var(--glass-border);
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1); position: relative;
+            cursor: pointer; transform-style: preserve-3d;
+        }
+        .glass-card:hover {
+            transform: translateY(-20px) rotateX(10deg) rotateY(10deg);
+            background: rgba(255, 255, 255, 0.6); box-shadow: 0 30px 60px rgba(0,0,0,0.1);
+        }
+
+        /* 荧光描边脉冲 */
+        .neon-border::after {
+            content: ''; position: absolute; inset: 0; border-radius: 30px; padding: 2px;
+            background: linear-gradient(45deg, var(--sky-blue), var(--pale-pink), var(--sky-blue));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude; animation: border-glow 4s infinite linear;
+        }
+        @keyframes border-glow { 0% { filter: hue-rotate(0deg); } 100% { filter: hue-rotate(360deg); } }
+
+        .card-icon { font-size: 3rem; margin-bottom: 25px; display: block; }
+        .glass-card h3 { font-size: 1.6rem; margin-bottom: 15px; color: #333; }
+        .glass-card p { font-size: 1rem; line-height: 1.8; color: #666; }
+
+        /* 针对手机端的深度优化 */
+        @media (max-width: 768px) {
+            /* 1. 导航栏优化：减小高度，防止遮挡内容 */
+            nav {
+                height: 70px;
+                padding: 0 15px;
+            }
+    
+            /* 2. 首页文字大小调整，防止溢出屏幕 */
+            .hero h1 {
+                font-size: 3rem !important;
+            }
+            .hero-glass {
+                padding: 40px 20px;
+                width: 90%;
+            }
+
+            /* 3. 核心修复：取消手机端的 3D 旋转效果，防止卡片飞出 */
+            .glass-card, .flip-card-inner {
+                transform: none !important;
+                transition: none !important;
+            }
+    
+            .glass-card:hover {
+                transform: translateY(-5px) !important; /* 手机端只做微小的上移 */
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            }
+
+            /* 核心修复：首页背景图在手机端显示 */
+            .hero {
+                /* 将背景附件设为 scroll 或 initial 以解决兼容性问题 */
+               background-attachment: scroll !important; 
+                /* 确保图片能盖满容器 */
+               background-size: cover !important;
+               background-position: center center !important;
+               /* 增加最小高度确保手机端显示完整 */
+               min-height: 100vh; 
+           }
+
+           /* 同时也修复全局背景的 fixed 问题 */
+          .background-container {
+               background-attachment: scroll !important;
+           }
+            
+            /* 4. 高度自适应：允许卡片根据文字多少自动变长 */
+            .glass-card, .flip-card {
+                height: auto !important;
+                min-height: 200px;
+                padding: 30px 20px !important;
+            }
+
+            /* 5. 网格调整：确保手机上一行只有一个卡片 */
+            .card-grid, .about-grid {
+                grid-template-columns: 1fr !important;
+                gap: 20px;
+            }
+            /* 放在 css/style.css 中 */
+            .gallery-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 15px;
+                padding: 20px;
+            }
+        }
+            /* 修正后的画廊样式 */
+           /* 放在 style.css 中 */
+        /* --- 放在 style.css 文件中 --- */
+
+        .photo-gallery {
+            display: grid;
+            /* repeat(4, 1fr) 代表强制分成 4 等份的列 */
+            grid-template-columns: repeat(4, 1fr); 
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .gallery-item {
+            width: 100%;
+            /* 移除固定的高度，让图片根据宽度自动伸缩，保持原始长宽比 */
+            height: auto; 
+            border-radius: 20px;
+            /* 去掉 overflow: hidden，确保下方文字不会被切掉 */
+            overflow: visible; 
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: auto; /* 自动适应原始比例 */
+            display: block;
+            border-radius: 20px; /* 让图片本身也有圆角 */
+            transition: transform 0.4s ease;
+        }
+
+        /* 增加图片悬停放大效果 */
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        /* 确保图片描述文字显示出来 */
+        .caption {
+            margin-top: 10px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #555;
+        }
+        /* 图片容器：调整高度为 250px 或更大，让图片更显眼 */
+        .card-image-wrapper {
+            width: calc(100% + 80px); /* 负边距让图片左右撑满卡片边缘 */
+            margin: -40px -40px 20px -40px; /* 向上和左右撑开，填满卡片顶部 */
+            height: 250px; /* 增大这个高度值 */
+            overflow: hidden;
+            border-radius: 20px 20px 0 0; /* 顶部圆角，底部变直 */
+        }
+
+        .card-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
