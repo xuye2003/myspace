@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xuye's Digital Garden</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Noto+Sans+SC:wght@300;500;700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --sky-blue: #a2d2ff;
+            --pale-pink: #ffafbd;
+            --glass: rgba(255, 255, 255, 0.25);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --neon-blue: #00d2ff;
+            --neon-pink: #ff9a9e;
+            --nav-en: #ccf3ff; /* 加深后的导航英文颜色 */
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+        body {
+            font-family: 'Montserrat', 'Noto Sans SC', sans-serif;
+            background: #f0f4f8;
+            overflow-x: hidden;
+            color: #333;
+        }
+
+        /* --- 背景粒子与视差层 --- */
+        .background-container {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, #e0f2fe 0%, #ffe4e6 100%);
+            z-index: -2;
+        }
+        .bubbles {
+            position: fixed; inset: 0; z-index: -1; pointer-events: none;
+        }
+        .bubble {
+            position: absolute; background: white; border-radius: 50%; opacity: 0.4;
+            animation: float-up 15s infinite ease-in-out;
+        }
+        @keyframes float-up {
+            0% { transform: translateY(110vh) scale(0); opacity: 0; }
+            50% { opacity: 0.6; }
+            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+        }
+
+        /* --- 导航栏 --- */
+        nav {
+            position: fixed; top: 0; width: 100%; height: 85px;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 5%; backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+            border-bottom: 1px solid var(--glass-border); z-index: 1000;
+        }
+        .logo {
+            font-family: 'Dancing Script', cursive; font-size: 2.2rem;
+            background: linear-gradient(to right, #74ebd5, #ACB6E5);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .nav-links { display: flex; list-style: none; gap: 25px; }
+        .nav-links a {
+            text-decoration: none; color: #444; font-size: 0.95rem; font-weight: 600;
+            text-align: center; transition: 0.3s;
+        }
+        .nav-links a span { 
+           display: block; 
+           font-size: 0.7rem; 
+           color: #ffffff;          /* 文字改为纯白 */
+           text-transform: uppercase; 
+           letter-spacing: 1.2px;
+           margin-top: 2px;
+    /* 核心修改：灰色阴影描边效果 */
+           text-shadow: 
+            -0.5px -0.5px 0 #323131,  
+             0.5px -0.5px 0 #323131,
+            -0.5px  0.5px 0 #323131,
+             0.5px  0.5px 0 #323131,
+             0px 2px 4px rgba(0,0,0,0.2);
+        }
+        .nav-links a:hover { color: var(--neon-pink); transform: translateY(-3px); }
+
+        /* --- 首页 Hero (严格复刻 Digital Garden 文字) --- */
+        .hero {
+            height: 100vh; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; text-align: center;
+            background: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+            background-attachment: fixed;
+        }
+        .hero-glass {
+            background: var(--glass); backdrop-filter: blur(20px);
+            padding: 60px 80px; border-radius: 40px; border: 1px solid var(--glass-border);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+        }
+        .hero h1 {
+            font-family: 'Dancing Script', cursive; font-size: 5.5rem;
+            color: white; text-shadow: 0 10px 20px rgba(0,0,0,0.1); margin-bottom: 10px;
+        }
+        .hero p { font-size: 1.2rem; color: white; letter-spacing: 5px; margin-bottom: 35px; }
+        
+        .btn-fancy {
+            padding: 16px 45px; background: white; color: #ff9a9e;
+            text-decoration: none; border-radius: 50px; font-weight: 700;
+            letter-spacing: 1px; box-shadow: 0 10px 20px rgba(255,154,158,0.3);
+            transition: 0.4s; display: inline-block;
+        }
+        .btn-fancy:hover { transform: scale(1.1); background: var(--sky-blue); color: white; }
+
+        /* --- 内容区域 --- */
+        .container { padding: 120px 10% 60px; }
+        .section-title { text-align: center; margin-bottom: 70px; }
+        .section-title h2 {
+            font-family: 'Dancing Script', cursive; font-size: 4.5rem;
+            color: var(--sky-blue); text-shadow: 2px 2px 0px rgba(255,255,255,0.8);
+        }
+        .section-title p { font-size: 1.1rem; color: #888; margin-top: -10px; }
+
+        .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
+
+        /* 3D 玻璃拟态卡片 */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(15px);
+            border-radius: 30px; padding: 40px; border: 1px solid var(--glass-border);
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1); position: relative;
+            cursor: pointer; transform-style: preserve-3d;
+        }
+        .glass-card:hover {
+            transform: translateY(-20px) rotateX(10deg) rotateY(10deg);
+            background: rgba(255, 255, 255, 0.6); box-shadow: 0 30px 60px rgba(0,0,0,0.1);
+        }
+
+        /* 荧光描边脉冲 */
+        .neon-border::after {
+            content: ''; position: absolute; inset: 0; border-radius: 30px; padding: 2px;
+            background: linear-gradient(45deg, var(--sky-blue), var(--pale-pink), var(--sky-blue));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude; animation: border-glow 4s infinite linear;
+        }
+        @keyframes border-glow { 0% { filter: hue-rotate(0deg); } 100% { filter: hue-rotate(360deg); } }
+
+        .card-icon { font-size: 3rem; margin-bottom: 25px; display: block; }
+        .glass-card h3 { font-size: 1.6rem; margin-bottom: 15px; color: #333; }
+        .glass-card p { font-size: 1rem; line-height: 1.8; color: #666; }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 3.5rem; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="background-container"></div>
+    <div class="bubbles" id="bubble-container"></div>
+
+    <nav>
+        <div class="logo">Xuye</div>
+        <ul class="nav-links">
+            <li><a href="#home">首页<span>Home</span></a></li>
+            <li><a href="#about">关于我<span>About</span></a></li>
+            <li><a href="#grad">读研心得<span>Research</span></a></li>
+            <li><a href="#travel">旅游<span>Travel</span></a></li>
+            <li><a href="#hobbies">兴趣<span>Hobbies</span></a></li>
+            <li><a href="#essays">随笔<span>Essays</span></a></li>
+        </ul>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="hero-glass">
+            <h1>Hello, Guest</h1>
+            <p>这里是我的数字花园 / Digital Garden</p>
+            <a href="#about" class="btn-fancy">开始探索 Explore</a>
+        </div>
+    </section>
+
+    <section id="about" class="container">
+        <div class="section-title">
+            <h2>About Me</h2>
+            <p>工科思维与感性生活的结合体</p>
+        </div>
+        <div class="card-grid">
+            <div class="glass-card neon-border">
+                <span class="card-icon">👨‍🔬</span>
+                <h3>研究者</h3>
+                <p>专注于机械工程与计算化学的交叉领域，在复杂的模拟数据中寻找物质的规律。</p>
+            </div>
+            <div class="glass-card">
+                <span class="card-icon">✨</span>
+                <h3>完美主义</h3>
+                <p>对审美有极致要求，无论是代码排版、实验图表还是生活点滴，都要追求平衡之美。</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="grad" class="container">
+        <div class="section-title">
+            <h2>Research Life</h2>
+            <p>在实验室的日常中挖掘灵感</p>
+        </div>
+        <div class="card-grid">
+            <div class="glass-card">
+                <span class="card-icon">🧪</span>
+                <h3>实验室日常</h3>
+                <p>记录那些与电解质、分子动力学以及 Bug 缠斗的漫长午后。</p>
+            </div>
+            <div class="glass-card neon-border">
+                <span class="card-icon">📝</span>
+                <h3>研路漫漫</h3>
+                <p>分享如何保持高效、如何面对失败，以及那些在深夜里闪烁的学术灵感。</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="travel" class="container">
+        <div class="section-title">
+            <h2>Travel</h2>
+            <p>步履不停，收集世界的光影</p>
+        </div>
+        <div class="card-grid">
+            <div class="glass-card">
+                <span class="card-icon">📸</span>
+                <h3>城市快门</h3>
+                <p>每一张照片都是时间的切片。从高原到大海，记录不同土地的呼吸。</p>
+            </div>
+            <div class="glass-card">
+                <span class="card-icon">🛤️</span>
+                <h3>在路上</h3>
+                <p>享受未知的旅程，身体和灵魂总有一个要在出发的路上。</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="hobbies" class="container">
+        <div class="section-title">
+            <h2>Hobbies</h2>
+            <p>在热爱里，找回最纯粹的自己</p>
+        </div>
+        <div class="card-grid">
+            <div class="glass-card neon-border">
+                <span class="card-icon">📉</span>
+                <h3>理财思考</h3>
+                <p>理性观察市场波动的逻辑，学习在变化的数字中寻找长期价值。</p>
+            </div>
+            <div class="glass-card">
+                <span class="card-icon">💻</span>
+                <h3>AI4Science</h3>
+                <p>热衷于用 Python 和机器学习探索科研的新可能，科技让世界更透明。</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="essays" class="container">
+        <div class="section-title">
+            <h2>Essays</h2>
+            <p>文字是情感的避风港</p>
+        </div>
+        <div class="card-grid">
+            <div class="glass-card">
+                <span class="card-icon">✍️</span>
+                <h3>生活随想</h3>
+                <p>那些未被定义的瞬间，都被留存在这一行行跳动的文字里。</p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // 粒子背景逻辑
+        const container = document.getElementById('bubble-container');
+        for (let i = 0; i < 25; i++) {
+            const bubble = document.createElement('div');
+            bubble.className = 'bubble';
+            const size = Math.random() * 50 + 20 + 'px';
+            bubble.style.width = size; bubble.style.height = size;
+            bubble.style.left = Math.random() * 100 + 'vw';
+            bubble.style.animationDuration = Math.random() * 8 + 10 + 's';
+            bubble.style.animationDelay = Math.random() * 5 + 's';
+            container.appendChild(bubble);
+        }
+
+        // 3D 倾斜动效逻辑
+        document.querySelectorAll('.glass-card').forEach(card => {
+            card.addEventListener('mousemove', e => {
+                let rect = card.getBoundingClientRect();
+                let x = e.clientX - rect.left, y = e.clientY - rect.top;
+                let centerX = rect.width / 2, centerY = rect.height / 2;
+                let rotateX = (y - centerY) / 10, rotateY = (centerX - x) / 10;
+                card.style.transform = `perspective(1000px) translateY(-10px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = `perspective(1000px) translateY(0) rotateX(0) rotateY(0)`;
+            });
+        });
+    </script>
+</body>
+</html>
