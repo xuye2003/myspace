@@ -140,10 +140,48 @@
         .glass-card h3 { font-size: 1.6rem; margin-bottom: 15px; color: #333; }
         .glass-card p { font-size: 1rem; line-height: 1.8; color: #666; }
 
+        /* 针对手机端的深度优化 */
         @media (max-width: 768px) {
-            .hero h1 { font-size: 3.5rem; }
-            .nav-links { display: none; }
+            /* 1. 导航栏优化：减小高度，防止遮挡内容 */
+            nav {
+                height: 70px;
+                padding: 0 15px;
+            }
+    
+            /* 2. 首页文字大小调整，防止溢出屏幕 */
+            .hero h1 {
+                font-size: 3rem !important;
+            }
+            .hero-glass {
+                padding: 40px 20px;
+                width: 90%;
+            }
+
+            /* 3. 核心修复：取消手机端的 3D 旋转效果，防止卡片飞出 */
+            .glass-card, .flip-card-inner {
+                transform: none !important;
+                transition: none !important;
+            }
+    
+            .glass-card:hover {
+                transform: translateY(-5px) !important; /* 手机端只做微小的上移 */
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            }
+
+            /* 4. 高度自适应：允许卡片根据文字多少自动变长 */
+            .glass-card, .flip-card {
+                height: auto !important;
+                min-height: 200px;
+                padding: 30px 20px !important;
+            }
+
+            /* 5. 网格调整：确保手机上一行只有一个卡片 */
+            .card-grid, .about-grid {
+                grid-template-columns: 1fr !important;
+                gap: 20px;
+            }
         }
+    }
     </style>
 </head>
 <body>
@@ -304,4 +342,5 @@
 </body>
 
 </html>
+
 
