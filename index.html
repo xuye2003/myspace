@@ -168,6 +168,22 @@
                 box-shadow: 0 10px 20px rgba(0,0,0,0.1);
             }
 
+            /* 核心修复：首页背景图在手机端显示 */
+            .hero {
+                /* 将背景附件设为 scroll 或 initial 以解决兼容性问题 */
+               background-attachment: scroll !important; 
+                /* 确保图片能盖满容器 */
+               background-size: cover !important;
+               background-position: center center !important;
+               /* 增加最小高度确保手机端显示完整 */
+               min-height: 100vh; 
+           }
+
+           /* 同时也修复全局背景的 fixed 问题 */
+          .background-container {
+               background-attachment: scroll !important;
+           }
+            
             /* 4. 高度自适应：允许卡片根据文字多少自动变长 */
             .glass-card, .flip-card {
                 height: auto !important;
@@ -342,5 +358,6 @@
 </body>
 
 </html>
+
 
 
