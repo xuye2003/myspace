@@ -105,18 +105,49 @@
         }
         .section-title p { font-size: 1.1rem; color: #888; margin-top: -10px; }
 
-        .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
-
-        /* 3D 玻璃拟态卡片 */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(15px);
-            border-radius: 30px; padding: 40px; border: 1px solid var(--glass-border);
-            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1); position: relative;
-            cursor: pointer; transform-style: preserve-3d;
+         /* --- 1. 卡片网格布局 --- */
+        .card-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            align-items: stretch; /* 确保同一行的卡片高度强制拉伸至一致 */
+            gap: 40px; 
         }
+
+        /* --- 2. 3D 玻璃拟态卡片 (整合对齐逻辑) --- */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.4); 
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: 30px; 
+            padding: 40px; 
+            border: 1px solid var(--glass-border);
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1); 
+            position: relative;
+            cursor: pointer; 
+            transform-style: preserve-3d;
+
+            /* 新增：让卡片内部变为垂直盒子，强制撑开空间 */
+            display: flex;
+            flex-direction: column;
+            height: 100%; 
+        }
+
+        /* --- 3. 悬停效果 --- */
         .glass-card:hover {
             transform: translateY(-20px) rotateX(10deg) rotateY(10deg);
-            background: rgba(255, 255, 255, 0.6); box-shadow: 0 30px 60px rgba(0,0,0,0.1);
+            background: rgba(255, 255, 255, 0.6); 
+            box-shadow: 0 30px 60px rgba(0,0,0,0.1);
+        }
+
+        /* --- 4. 关键：确保内容区撑满剩余高度 --- */
+        /* 如果你的 HTML 结构里有 .card-content，请务必加上这一行 */
+        .card-content {
+            flex-grow: 1;      /* 无论文字多还是少，都把空间占满 */
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            position: relative;
+            padding-bottom: 50px; /* 为左下角的标签预留固定高度 */
         }
 
         /* 荧光描边脉冲 */
@@ -251,4 +282,50 @@
             height: 100%;
             object-fit: cover;
             transition: transform 0.5s ease;
+        }
+        /* 标签的基础样式 */
+        .category-tag {
+            position: absolute;
+            /* --- 位置调整：更靠下，彻底贴左 --- */
+            left: 0;                
+            bottom: 15px;           /* 从 25px 调到 12px，位置明显下移 */
+
+            /* --- 形状设计：左平右圆的书签感 --- */
+            padding: 4px 15px 4px 10px; 
+            border-radius: 20px 20px 20px 20px; /* 20px 是大圆角 */
+
+            /* --- 视觉风格：更鲜艳的渐变粉 --- */
+            /* 修正了原本 #ffc9c9 颜色太淡的问题，改为鲜艳渐变 */
+            background: linear-gradient(135deg, #f0bdbe 0%, #ea8ea1 100%);
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 800;       /* 加粗字体 */
+            letter-spacing: 1.5px;  /* 增加字间距，更具设计感 */
+            text-transform: uppercase;
+
+            /* --- 玻璃感与光影沉淀 --- */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            /* 强化阴影，让它像在发光 */
+            box-shadow: 4px 4px 15px rgba(255, 106, 136, 0.4);
+
+            z-index: 10;
+            pointer-events: none;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+
+            /* --- 引入更平滑的漂浮动画 --- */
+            animation: tag-float 3s infinite ease-in-out;
+        }
+
+        /* 对应的平滑漂浮动画，比单纯的脉冲更高级 */
+        @keyframes tag-float {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(5px); } /* 轻轻向右探出，增加灵动感 */
+        }
+
+        /* 针对不同类别的分类颜色（可选，建议保持鲜艳） */
+        .category-tag.graduation {
+            background: linear-gradient(135deg, #a2d2ff 0%, #6eb5ff 100%);
+            box-shadow: 4px 4px 15px rgba(110, 181, 255, 0.4);
         }
