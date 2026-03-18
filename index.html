@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Xuye's Digital Garden</title>
     <link rel="stylesheet" href="./css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Noto+Sans+SC:wght@300;500;700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Noto+Sans+SC:wght@300;500;700&family=Montserrat:wght@400;600&display=swap"
+        rel="stylesheet">
     <style>
         :root {
             --sky-blue: #a2d2ff;
@@ -14,10 +17,17 @@
             --glass-border: rgba(255, 255, 255, 0.5);
             --neon-blue: #00d2ff;
             --neon-pink: #ff9a9e;
-            --nav-en: #ccf3ff; /* 加深后的导航英文颜色 */
+            --nav-en: #ccf3ff;
+            /* 加深后的导航英文颜色 */
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Montserrat', 'Noto Sans SC', sans-serif;
             background: #f0f4f8;
@@ -28,178 +38,316 @@
         /* --- 背景粒子与视差层 --- */
         .background-container {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background: linear-gradient(135deg, #e0f2fe 0%, #ffe4e6 100%);
             z-index: -2;
         }
+
         .bubbles {
-            position: fixed; inset: 0; z-index: -1; pointer-events: none;
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
         }
+
         .bubble {
-            position: absolute; background: white; border-radius: 50%; opacity: 0.4;
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.4;
             animation: float-up 15s infinite ease-in-out;
         }
+
         @keyframes float-up {
-            0% { transform: translateY(110vh) scale(0); opacity: 0; }
-            50% { opacity: 0.6; }
-            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+            0% {
+                transform: translateY(110vh) scale(0);
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 0.6;
+            }
+
+            100% {
+                transform: translateY(-10vh) scale(1.5);
+                opacity: 0;
+            }
         }
 
         /* --- 导航栏 --- */
         nav {
-            position: fixed; top: 0; width: 100%; height: 85px;
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 0 5%; backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
-            border-bottom: 1px solid var(--glass-border); z-index: 1000;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 85px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 5%;
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border-bottom: 1px solid var(--glass-border);
+            z-index: 1000;
         }
+
         .logo {
-            font-family: 'Dancing Script', cursive; font-size: 2.2rem;
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.2rem;
             background: linear-gradient(to right, #74ebd5, #ACB6E5);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-        .nav-links { display: flex; list-style: none; gap: 25px; }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
         .nav-links a {
-            text-decoration: none; color: #444; font-size: 0.95rem; font-weight: 600;
-            text-align: center; transition: 0.3s;
+            text-decoration: none;
+            color: #444;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-align: center;
+            transition: 0.3s;
         }
-        .nav-links a span { 
-           display: block; 
-           font-size: 0.7rem; 
-           color: #ffffff;          /* 文字改为纯白 */
-           text-transform: uppercase; 
-           letter-spacing: 1.2px;
-           margin-top: 2px;
-    /* 核心修改：灰色阴影描边效果 */
-           text-shadow: 
-            -0.5px -0.5px 0 #323131,  
-             0.5px -0.5px 0 #323131,
-            -0.5px  0.5px 0 #323131,
-             0.5px  0.5px 0 #323131,
-             0px 2px 4px rgba(0,0,0,0.2);
+
+        .nav-links a span {
+            display: block;
+            font-size: 0.7rem;
+            color: #ffffff;
+            /* 文字改为纯白 */
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            margin-top: 2px;
+            /* 核心修改：灰色阴影描边效果 */
+            text-shadow:
+                -0.5px -0.5px 0 #323131,
+                0.5px -0.5px 0 #323131,
+                -0.5px 0.5px 0 #323131,
+                0.5px 0.5px 0 #323131,
+                0px 2px 4px rgba(0, 0, 0, 0.2);
         }
-        .nav-links a:hover { color: var(--neon-pink); transform: translateY(-3px); }
+
+        .nav-links a:hover {
+            color: var(--neon-pink);
+            transform: translateY(-3px);
+        }
 
         /* --- 首页 Hero (严格复刻 Digital Garden 文字) --- */
         .hero {
-            height: 100vh; display: flex; flex-direction: column;
-            justify-content: center; align-items: center; text-align: center;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
             background: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
             background-attachment: fixed;
         }
+
         .hero-glass {
-            background: var(--glass); backdrop-filter: blur(20px);
-            padding: 60px 80px; border-radius: 40px; border: 1px solid var(--glass-border);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            padding: 60px 80px;
+            border-radius: 40px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
         }
+
         .hero h1 {
-            font-family: 'Dancing Script', cursive; font-size: 5.5rem;
-            color: white; text-shadow: 0 10px 20px rgba(0,0,0,0.1); margin-bottom: 10px;
+            font-family: 'Dancing Script', cursive;
+            font-size: 5.5rem;
+            color: white;
+            text-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 10px;
         }
-        .hero p { font-size: 1.2rem; color: white; letter-spacing: 5px; margin-bottom: 35px; }
-        
+
+        .hero p {
+            font-size: 1.2rem;
+            color: white;
+            letter-spacing: 5px;
+            margin-bottom: 35px;
+        }
+
         .btn-fancy {
-            padding: 16px 45px; background: white; color: #ff9a9e;
-            text-decoration: none; border-radius: 50px; font-weight: 700;
-            letter-spacing: 1px; box-shadow: 0 10px 20px rgba(255,154,158,0.3);
-            transition: 0.4s; display: inline-block;
+            padding: 16px 45px;
+            background: white;
+            color: #ff9a9e;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            box-shadow: 0 10px 20px rgba(255, 154, 158, 0.3);
+            transition: 0.4s;
+            display: inline-block;
         }
-        .btn-fancy:hover { transform: scale(1.1); background: var(--sky-blue); color: white; }
+
+        .btn-fancy:hover {
+            transform: scale(1.1);
+            background: var(--sky-blue);
+            color: white;
+        }
 
         /* --- 内容区域 --- */
-        .container { padding: 120px 10% 60px; }
-        .section-title { text-align: center; margin-bottom: 70px; }
-        .section-title h2 {
-            font-family: 'Dancing Script', cursive; font-size: 4.5rem;
-            color: var(--sky-blue); text-shadow: 2px 2px 0px rgba(255,255,255,0.8);
+        .container {
+            padding: 120px 10% 60px;
         }
-        .section-title p { font-size: 1.1rem; color: #888; margin-top: -10px; }
 
-        .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
+        .section-title {
+            text-align: center;
+            margin-bottom: 70px;
+        }
+
+        .section-title h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 4.5rem;
+            color: var(--sky-blue);
+            text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.8);
+        }
+
+        .section-title p {
+            font-size: 1.1rem;
+            color: #888;
+            margin-top: -10px;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
 
         /* 3D 玻璃拟态卡片 */
         .glass-card {
-            background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(15px);
-            border-radius: 30px; padding: 40px; border: 1px solid var(--glass-border);
-            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1); position: relative;
-            cursor: pointer; transform-style: preserve-3d;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(15px);
+            border-radius: 30px;
+            padding: 40px;
+            border: 1px solid var(--glass-border);
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
+            cursor: pointer;
+            transform-style: preserve-3d;
         }
+
         .glass-card:hover {
             transform: translateY(-20px) rotateX(10deg) rotateY(10deg);
-            background: rgba(255, 255, 255, 0.6); box-shadow: 0 30px 60px rgba(0,0,0,0.1);
+            background: rgba(255, 255, 255, 0.6);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1);
         }
 
         /* 荧光描边脉冲 */
         .neon-border::after {
-            content: ''; position: absolute; inset: 0; border-radius: 30px; padding: 2px;
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 30px;
+            padding: 2px;
             background: linear-gradient(45deg, var(--sky-blue), var(--pale-pink), var(--sky-blue));
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            mask-composite: exclude; animation: border-glow 4s infinite linear;
+            mask-composite: exclude;
+            animation: border-glow 4s infinite linear;
         }
-        @keyframes border-glow { 0% { filter: hue-rotate(0deg); } 100% { filter: hue-rotate(360deg); } }
 
-        .card-icon { font-size: 3rem; margin-bottom: 25px; display: block; }
-        .glass-card h3 { font-size: 1.6rem; margin-bottom: 15px; color: #333; }
-        .glass-card p { font-size: 1rem; line-height: 1.8; color: #666; }
+        @keyframes border-glow {
+            0% {
+                filter: hue-rotate(0deg);
+            }
+
+            100% {
+                filter: hue-rotate(360deg);
+            }
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 25px;
+            display: block;
+        }
+
+        .glass-card h3 {
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .glass-card p {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: #666;
+        }
 
         /* 针对手机端的深度优化 */
         @media (max-width: 768px) {
+
             /* 1. 导航栏优化：减小高度，防止遮挡内容 */
             nav {
                 height: 70px;
                 padding: 0 15px;
             }
-    
+
             /* 2. 首页文字大小调整，防止溢出屏幕 */
             .hero h1 {
                 font-size: 3rem !important;
             }
+
             .hero-glass {
                 padding: 40px 20px;
                 width: 90%;
             }
 
             /* 3. 核心修复：取消手机端的 3D 旋转效果，防止卡片飞出 */
-            .glass-card, .flip-card-inner {
+            .glass-card,
+            .flip-card-inner {
                 transform: none !important;
                 transition: none !important;
             }
-    
+
             .glass-card:hover {
-                transform: translateY(-5px) !important; /* 手机端只做微小的上移 */
-                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+                transform: translateY(-5px) !important;
+                /* 手机端只做微小的上移 */
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
             }
 
             /* 核心修复：首页背景图在手机端显示 */
             .hero {
                 /* 将背景附件设为 scroll 或 initial 以解决兼容性问题 */
-               background-attachment: scroll !important; 
+                background-attachment: scroll !important;
                 /* 确保图片能盖满容器 */
-               background-size: cover !important;
-               background-position: center center !important;
-               /* 增加最小高度确保手机端显示完整 */
-               min-height: 100vh; 
-           }
+                background-size: cover !important;
+                background-position: center center !important;
+                /* 增加最小高度确保手机端显示完整 */
+                min-height: 100vh;
+            }
 
-           /* 同时也修复全局背景的 fixed 问题 */
-          .background-container {
-               background-attachment: scroll !important;
-           }
-            
+            /* 同时也修复全局背景的 fixed 问题 */
+            .background-container {
+                background-attachment: scroll !important;
+            }
+
             /* 4. 高度自适应：允许卡片根据文字多少自动变长 */
-            .glass-card, .flip-card {
+            .glass-card,
+            .flip-card {
                 height: auto !important;
                 min-height: 200px;
                 padding: 30px 20px !important;
             }
 
             /* 5. 网格调整：确保手机上一行只有一个卡片 */
-            .card-grid, .about-grid {
+            .card-grid,
+            .about-grid {
                 grid-template-columns: 1fr !important;
                 gap: 20px;
             }
         }
     </style>
 </head>
+
 <body>
 
     <div class="background-container"></div>
@@ -225,36 +373,37 @@
         </div>
     </section>
 
-  <section id="about" class="container">
-    <div class="section-title">
-        <h2>About Me</h2>
-        <p>工科思维与感性生活的结合体</p>
-    </div>
-    
-    <div class="card-grid">
-        <div class="glass-card neon-border">
-            <span class="card-icon">👨‍🔬</span>
-            <h3>Scientific Research</h3>
-            <p>专注于 AI 与计算电化学的交叉领域，在复杂的模拟数据中寻找物质的规律。</p>
+    <section id="about" class="container">
+        <div class="section-title">
+            <h2>About Me</h2>
+            <p>工科思维与感性生活的结合体</p>
+        </div>
 
-            <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.3);">
-        <p style="font-size: 0.9rem; line-height: 1.8;">
-            <strong>2021 - 2025</strong> | CSU Applied Chemistry (B.S.)<br>
-            <strong>2025 - Present</strong> | XMU Material Engineering (M.S.)
-        </p>
-    </div>
+        <div class="card-grid">
+            <div class="glass-card neon-border">
+                <span class="card-icon">👨‍🔬</span>
+                <h3>Scientific Research</h3>
+                <p>专注于 AI 与计算电化学的交叉领域，在复杂的模拟数据中寻找物质的规律。</p>
+
+                <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.3);">
+                    <p style="font-size: 0.9rem; line-height: 1.8;">
+                        <strong>2021 - 2025</strong> | CSU Applied Chemistry (B.S.)<br>
+                        <strong>2025 - Present</strong> | XMU Material Engineering (M.S.)
+                    </p>
+                </div>
+            </div>
+
+            <div class="glass-card">
+                <span class="card-icon">✨</span>
+                <h3>Lifestyle</h3>
+                <p><strong>🎧音乐：</strong>情绪的调色盘，陪我度过每一个忙碌的深夜。<br>
+                    <strong>☕咖啡：</strong>热衷于探索不同豆子的风味，寻找那一刻的灵感觉醒。<br>
+                    <strong>📚阅读：</strong>跨越时空，与伟大的思想进行对话。<br>
+                    <strong>✈️旅游：</strong>收集不同城市日落的余晖，重新认识这个世界。
+                </p>
+            </div>
         </div>
-        
-        <div class="glass-card">
-            <span class="card-icon">✨</span>
-            <h3>Lifestyle</h3>
-            <p><strong>🎧音乐：</strong>情绪的调色盘，陪我度过每一个忙碌的深夜。<br>
-               <strong>☕咖啡：</strong>热衷于探索不同豆子的风味，寻找那一刻的灵感觉醒。<br>
-               <strong>📚阅读：</strong>跨越时空，与伟大的思想进行对话。<br>
-               <strong>✈️旅游：</strong>收集不同城市日落的余晖，重新认识这个世界。</p>
-        </div>
-    </div>
-</section>
+    </section>
 
     <section id="grad" class="container">
         <div class="section-title">
@@ -281,61 +430,66 @@
             <p>步履不停，收集世界的光影</p>
         </div>
         <div class="card-grid">
-    
-    <a href="pages/lijiang/lijiang.html" class="glass-card neon-border" style="text-decoration: none; display: block; color: inherit;">
-        <div id="lijiang" class="card-image-wrapper"> 
-        <img src="pages/lijiang/lijiang-5.jpg">
-    </div>
-    <div class="card-content" style="position: relative; padding-bottom: 50px;">
-        <h3>📸2025.6.11 丽江</h3>
-        <p>在纳西古镇的时光，是一首慢节奏的诗</p>
-        <span class="category-tag">毕业旅行</span>
-    </div>
-           </a>
-    
-    <a href="pages/xianggelila/xianggelila.html" class="glass-card neon-border" style="text-decoration: none; display: block; color: inherit;">
-        <div id="xianggelila" class="card-image-wrapper">
-        <img src="pages/xianggelila/cover.jpg">
-    </div>
-    <div class="card-content" style="position: relative; padding-bottom: 50px;">
-        <h3>📸2025.6.13 香格里拉</h3>
-        <p>“你是心中的日月，落在这里”</p>
-        <span class="category-tag">毕业旅行</span>
-    </div>
-           </a>
-    
-    <a href="pages/dali/dali.html" class="glass-card neon-border" style="text-decoration: none; display: block; color: inherit;">
-        <div id="dali" class="card-image-wrapper" style="position: relative; padding-bottom: 50px;">
-        <img src="pages/dali/cover.jpg">
-    </div>
-    <div class="card-content">
-        <h3>📸2025.6.14 大理</h3>
-        <p>云歇在苍山，风睡在洱海</p>
-        <span class="category-tag">毕业旅行</span>
-    </div>
-           </a>
-    
-    <a href="pages/luoyang/luoyang.html" class="glass-card neon-border" style="text-decoration: none; display: block; color: inherit;">
-        <div id="dali" class="card-image-wrapper">
-        <img src="pages/luoyang/cover.jpg">
-    </div>
-    <div class="card-content" style="position: relative; padding-bottom: 50px;">
-        <h3>📸2024.8.9 洛阳</h3>
-        <p>“花开时节动京城”</p>
-        <span class="category-tag">solotrip</span>
-    </div>
-           </a>
-    
-      <a href="pages/zhengzhou/zhengzhou.html" class="glass-card neon-border" style="text-decoration: none; display: block; color: inherit;">
-        <div id="dali" class="card-image-wrapper">
-        <img src="pages/zhengzhou/cover.jpg">
-    </div>
-    <div class="card-content" style="position: relative; padding-bottom: 50px;">
-        <h3>2024.7.11-8.8 郑州</h3>
-        <p>短暂地迁徙到北方</p>
-        <span class="category-tag">实习</span>
-    </div>
-           </a>
+
+            <a href="pages/lijiang/lijiang.html" class="glass-card neon-border"
+                style="text-decoration: none; display: block; color: inherit;">
+                <div id="lijiang" class="card-image-wrapper">
+                    <img src="pages/lijiang/lijiang-5.jpg">
+                </div>
+                <div class="card-content" style="position: relative; padding-bottom: 50px;">
+                    <h3>📸2025.6.11 丽江</h3>
+                    <p>在纳西古镇的时光，是一首慢节奏的诗</p>
+                    <span class="category-tag">毕业旅行</span>
+                </div>
+            </a>
+
+            <a href="pages/xianggelila/xianggelila.html" class="glass-card neon-border"
+                style="text-decoration: none; display: block; color: inherit;">
+                <div id="xianggelila" class="card-image-wrapper">
+                    <img src="pages/xianggelila/cover.jpg">
+                </div>
+                <div class="card-content" style="position: relative; padding-bottom: 50px;">
+                    <h3>📸2025.6.13 香格里拉</h3>
+                    <p>“你是心中的日月，落在这里”</p>
+                    <span class="category-tag">毕业旅行</span>
+                </div>
+            </a>
+
+            <a href="pages/dali/dali.html" class="glass-card neon-border"
+                style="text-decoration: none; display: block; color: inherit;">
+                <div id="dali" class="card-image-wrapper" style="position: relative; padding-bottom: 50px;">
+                    <img src="pages/dali/cover.jpg">
+                </div>
+                <div class="card-content">
+                    <h3>📸2025.6.14 大理</h3>
+                    <p>云歇在苍山，风睡在洱海</p>
+                    <span class="category-tag">毕业旅行</span>
+                </div>
+            </a>
+
+            <a href="pages/luoyang/luoyang.html" class="glass-card neon-border"
+                style="text-decoration: none; display: block; color: inherit;">
+                <div id="dali" class="card-image-wrapper">
+                    <img src="pages/luoyang/cover.jpg">
+                </div>
+                <div class="card-content" style="position: relative; padding-bottom: 50px;">
+                    <h3>📸2024.8.9 洛阳</h3>
+                    <p>“花开时节动京城”</p>
+                    <span class="category-tag">solotrip</span>
+                </div>
+            </a>
+
+            <a href="pages/zhengzhou/zhengzhou.html" class="glass-card neon-border"
+                style="text-decoration: none; display: block; color: inherit;">
+                <div id="dali" class="card-image-wrapper">
+                    <img src="pages/zhengzhou/cover.jpg">
+                </div>
+                <div class="card-content" style="position: relative; padding-bottom: 50px;">
+                    <h3>2024.7.11-8.8 郑州</h3>
+                    <p>短暂地迁徙到北方</p>
+                    <span class="category-tag">实习</span>
+                </div>
+            </a>
 
             <div class="glass-card">
                 <span class="card-icon">🛤️</span>
@@ -406,9 +560,110 @@
             });
         });
     </script>
+    <script src="https://cdn.staticfile.org/twikoo/1.6.32/twikoo.all.min.js"></script>
+
+    <div id="garden-comment-section">
+        <div class="comment-header">
+            <span class="comment-icon">💬</span>
+            <h3>碎碎念</h3>
+        </div>
+        <div id="tcomment"></div>
+    </div>
+
+    <style>
+        /* 使用最高层级的 ID 选择器，确保样式不外溢也不被覆盖 */
+        #garden-comment-section {
+            margin-top: 50px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.15) !important;
+            backdrop-filter: blur(20px) !important;
+            -webkit-backdrop-filter: blur(20px) !important;
+            border: 1px solid rgba(255, 255, 255, 0.3) !important;
+            border-radius: 25px !important;
+            position: relative !important;
+            /* 关键：彻底关掉 3D，防止点击穿透 */
+            transform: none !important;
+            transform-style: flat !important;
+            perspective: none !important;
+            z-index: 999 !important;
+        }
+
+        #garden-comment-section .comment-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        #garden-comment-section h3 {
+            color: white !important;
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        /* --- Twikoo 内部元素强制重置 --- */
+
+        /* 1. 强制所有输入框可点、文字可见 */
+        #tcomment .tk-input,
+        #tcomment .tk-nick,
+        #tcomment .tk-mail,
+        #tcomment .tk-link {
+            background: rgba(255, 255, 255, 0.1) !important;
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+            color: white !important;
+            pointer-events: auto !important;
+            cursor: text !important;
+        }
+
+        /* 2. 昵称、邮箱、网址的标题文字颜色 */
+        #tcomment .tk-meta-input .tk-input-label {
+            color: rgba(255, 255, 255, 0.8) !important;
+        }
+
+        /* 3. 解决“发送”按钮和所有交互按钮 */
+        #tcomment .tk-submit,
+        #tcomment .tk-send,
+        #tcomment .tk-btn,
+        #tcomment .tk-preview {
+            background-color: #ff9a9e !important;
+            /* 你的霓虹粉 */
+            color: white !important;
+            cursor: pointer !important;
+            pointer-events: auto !important;
+            border: none !important;
+            border-radius: 12px !important;
+            transition: transform 0.2s;
+        }
+
+        #tcomment .tk-send:hover {
+            transform: scale(1.05);
+        }
+
+        /* 4. 底部状态文字（“没有评论”等） */
+        #tcomment .tk-comments-count,
+        #tcomment .tk-no-comment {
+            color: rgba(255, 255, 255, 0.6) !important;
+            text-align: center;
+        }
+
+        /* 5. 修复由于 3D 导致的点击判定偏移 */
+        #tcomment * {
+            transform: none !important;
+            pointer-events: auto !important;
+        }
+    </style>
+
+    <script>
+        twikoo.init({
+            envId: 'https://你的项目名.vercel.app', // 👈 记得换成你自己的真实域名
+            el: '#tcomment',
+            onCommentLoaded: function () {
+                console.log('留言板已点亮');
+                // 再次兜底检查：确保点击权限
+                document.querySelector('#tcomment').style.pointerEvents = 'auto';
+            }
+        })
+    </script>
 </body>
 
 </html>
-
-
-
